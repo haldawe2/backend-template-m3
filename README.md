@@ -112,6 +112,7 @@ Tasks in the database have the following properties:
 | SIGN UP user     | POST      | /api/v1/auth/signup  | { username, email, password }   |    Public |                 
 | LOG IN user      | POST      | /api/v1/auth/login   | { email, password }             |    Public |                  
 | GET logged in user   | GET     | /api/v1/auth/me    |   | Private |
+| POST create task | POST | /api/v1/tasks/create | { name, project, status, notes, color, tags, startDate, endDate, dependencies, workers, links } | Private |
 
 ---
 

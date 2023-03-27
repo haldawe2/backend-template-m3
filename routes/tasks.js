@@ -6,7 +6,7 @@ const Task = require("../models/Task");
 // @desc    Creates a task in the DB
 // @route   POST /tasks/create
 // @access  User
-router.get("/create", async (req, res, next) => {
+router.post("/create", async (req, res, next) => {
   const {
     name,
     project,
@@ -18,7 +18,7 @@ router.get("/create", async (req, res, next) => {
     endDate,
     dependencies,
     workers,
-    links,
+    links
   } = req.body;
   if ( name === "" || !isDate(new Date(startDate)) || !isDate(new Date(endDate))) {
     res.status(400).json({ message: 'Please fill all the required fields' })
