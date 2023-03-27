@@ -40,7 +40,20 @@ router.post("/create", async (req, res, next) => {
       links
     }
     await Task.create(newTask);
-    res.status(201).json({ message: 'task created' });
+    res.status(201).json({ message: 'Task created' });
+  } catch (error) {
+    res.status(400).json({ message: 'Could not process your request' })
+  }
+});
+
+// @desc    Creates a task in the DB
+// @route   DELETE /tasks/delete/:taskId
+// @access  User
+router.delete("/delete/:taskId", async (req, res, next) => {
+  const { taskId } = req.params;
+  try {
+    await Task.findByIdAndDelete(taskId);
+    res.status(204).json({ message: 'Content deleted succesfully'});
   } catch (error) {
     res.status(400).json({ message: 'Could not process your request' })
   }

@@ -113,6 +113,7 @@ Tasks in the database have the following properties:
 | LOG IN user      | POST      | /api/v1/auth/login   | { email, password }             |    Public |                  
 | GET logged in user   | GET     | /api/v1/auth/me    |   | Private |
 | POST create task | POST | /api/v1/tasks/create | { name, project, status, notes, color, tags, startDate, endDate, dependencies, workers, links } | Private |
+| DELETE task | DELETE | /api/v1/tasks/delete/:taskId | | Private |
 
 ---
 
