@@ -8,7 +8,8 @@ const taskSchema = new Schema({
   },
   project: {
     type: mongoose.Types.ObjectId,
-    ref: "Project"
+    ref: "Project",
+    required: true
   },
   status: {
     type: String,
@@ -25,16 +26,20 @@ const taskSchema = new Schema({
     type: String
   }],
   plannedStartDate: {
-    type: Date
+    type: Date,
+    required: true
   },
   startDate: {
-    type: Date
+    type: Date,
+    required: true
   },
   plannedEndDate: {
-    type: Date
+    type: Date,
+    required: true
   },
   endDate: {
-    type: Date
+    type: Date,
+    required: true
   },
   dependencies: [{
     type: mongoose.Types.ObjectId,
