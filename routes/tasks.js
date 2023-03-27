@@ -3,7 +3,7 @@ const { isDate } = require('date-fns');
 const router = require("express").Router();
 const Task = require("../models/Task");
 
-// @desc    Creates a task in the DB
+// @desc    Sets dates as Date objects and creates a task
 // @route   POST /tasks/create
 // @access  User
 router.post("/create", async (req, res, next) => {
@@ -42,11 +42,11 @@ router.post("/create", async (req, res, next) => {
     await Task.create(newTask);
     res.status(201).json({ message: 'Task created' });
   } catch (error) {
-    res.status(400).json({ message: 'Could not process your request' })
+    res.status(400).json(error)
   }
 });
 
-// @desc    Creates a task in the DB
+// @desc    Deletes a task by Id
 // @route   DELETE /tasks/delete/:taskId
 // @access  User
 router.delete("/delete/:taskId", async (req, res, next) => {
@@ -55,7 +55,50 @@ router.delete("/delete/:taskId", async (req, res, next) => {
     await Task.findByIdAndDelete(taskId);
     res.status(204).json({ message: 'Content deleted succesfully'});
   } catch (error) {
-    res.status(400).json({ message: 'Could not process your request' })
+    res.status(400).json(error)
+  }
+});
+
+// @desc    Edits a task
+// @route   PUT /tasks/edit/:taskId
+// @access  User
+router.put("/edit/:taskId", async (req, res, next) => {
+  const { taskId } = req.params;
+  const {
+    name,
+    project,
+    status,
+    notes,
+    color,
+    tags,
+    startDate,
+    plannedStartDate,
+    endDate,
+    plannedEndDate,
+    dependencies,
+    workers,
+    links
+  } = req.body;
+  try {
+    const newTask = {
+      name, 
+      project, 
+      status, 
+      notes, 
+      color, 
+      tags, 
+      startDate: new Date(startDate),
+      plannedStartDate: new Date(plannedStartDate), 
+      endDate: new Date(endDate), 
+      plannedEndDate: new Date(plannedEndDate),
+      dependencies, 
+      workers, 
+      links
+    }
+    const updatedTask = await Task.findByIdAndUpdate(taskId, newTask, {new: true});
+    res.status(200).json(updatedTask);
+  } catch (error) {
+    res.status(400).json(error)
   }
 });
 
