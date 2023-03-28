@@ -5,20 +5,28 @@ const userSchema = new Schema({
   email: {
     type: String,
     unique: true,
-    required: true
+    required: [true, "Email is required"]
   },
   hashedPassword: {
     type: String,
-    required: true
+    required: [true, "Hashed password is required"]
   },
-  username: {
+  name: {
     type: String,
-    required: true
+    required: [true, "Name is required"]
   },
-  role: {
+  surname: {
     type: String,
-    enum: ['user', 'admin'],
-    default: 'user'
+    required: [true, "Surname is required"]
+  },
+  profilePicture: {
+    type: String
+  },
+  company: {
+    type: String
+  },
+  availability: {
+    type: Number
   }
 },
   {

@@ -9,9 +9,9 @@ const saltRounds = 10;
 // @route   POST /api/v1/auth/signup
 // @access  Public
 router.post('/signup', async (req, res, next) => {
-  const { email, password, username } = req.body;
+  const { email, password, name } = req.body;
   // Check if email or password or name are provided as empty string 
-  if (email === "" || password === "" || username === "") {
+  if (email === "" || password === "" || name === "") {
     res.status(400).json({ message: 'Please fill all the fields to register' });
     return;
   }
@@ -35,7 +35,7 @@ router.post('/signup', async (req, res, next) => {
     } else {
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashedPassword = bcrypt.hashSync(password, salt);
-      const newUser = await User.create({ email, hashedPassword, username });
+      const newUser = await User.create({ email, hashedPassword, name });
       res.status(201).json({ data: newUser });
     }
   } catch (error) {
@@ -67,7 +67,7 @@ router.post('/login', async (req, res, next) => {
         // Let's create what we want to store in the jwt token
         const payload = {
           email: userInDB.email,
-          username: userInDB.username,
+          name: userInDB.name,
           role: userInDB.role,
           _id: userInDB._id
         }
