@@ -37,9 +37,32 @@ Users in the database have the following properties:
 
 ```js
 {
-  "username": String,
-  "email": String,
-  "hashedPassword": String
+  email: {
+    type: String,
+    unique: true,
+    required: [true, "Email is required"]
+  },
+  hashedPassword: {
+    type: String,
+    required: [true, "Hashed password is required"]
+  },
+  name: {
+    type: String,
+    required: [true, "Name is required"]
+  },
+  surname: {
+    type: String,
+    required: [true, "Surname is required"]
+  },
+  profilePicture: {
+    type: String
+  },
+  company: {
+    type: String
+  },
+  availability: {
+    type: Number
+  }
 }
 ```
 
@@ -112,10 +135,14 @@ Tasks in the database have the following properties:
 | SIGN UP user     | POST      | /api/v1/auth/signup  | { username, email, password }   |    Public |                 
 | LOG IN user      | POST      | /api/v1/auth/login   | { email, password }             |    Public |                  
 | GET logged in user   | GET     | /api/v1/auth/me    |   | Private |
+| EDIT user data | GET | /api/v1/edit/:userId | | Private |
+| PUT user data | PUT | /api/v1/edit/:userId | { email, password1, password2, name, surname, profilePicture, company, availability } | Private |
+| DELETE user | DELETE | /api/v1/delete/:userId | | Private |
 | POST create task | POST | /api/v1/tasks/create | { name, project, status, notes, color, tags, startDate, endDate, dependencies, workers, links } | Private |
 | DELETE task | DELETE | /api/v1/tasks/delete/:taskId | | Private |
 | PUT update task | PUT | /api/v1/tasks/edit/:taskId | { name, project, status, notes, color, tags, , plannedStartDate, endDate, plannedEndDate, dependencies, workers, links } | Private |
 | GET task | GET | /api/v1/tasks/:taskId | | Private |
+
 
 ---
 
