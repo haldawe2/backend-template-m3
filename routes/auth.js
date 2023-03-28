@@ -9,10 +9,18 @@ const saltRounds = 10;
 // @route   POST /api/v1/auth/signup
 // @access  Public
 router.post('/signup', async (req, res, next) => {
-  const { email, password, name } = req.body;
+  const { 
+    email, 
+    password, 
+    name, 
+    surname, 
+    profilePicture,
+    company, 
+    availability 
+  } = req.body;
   // Check if email or password or name are provided as empty string 
-  if (email === "" || password === "" || name === "") {
-    res.status(400).json({ message: 'Please fill all the fields to register' });
+  if (email === "" || password === "" || name === "" || surname === "") {
+    res.status(400).json({ message: 'Please fill all the required fields to register' });
     return;
   }
   // Use regex to validate the email format
@@ -35,7 +43,15 @@ router.post('/signup', async (req, res, next) => {
     } else {
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashedPassword = bcrypt.hashSync(password, salt);
-      const newUser = await User.create({ email, hashedPassword, name });
+      const newUser = await User.create({
+        email, 
+        hashedPassword, 
+        name, 
+        surname, 
+        profilePicture,
+        company, 
+        availability 
+      });
       res.status(201).json({ data: newUser });
     }
   } catch (error) {
