@@ -72,6 +72,20 @@ router.put("/edit/:workspaceId", async (req, res, next) => {
     }
 });
 
+// @desc    Delete a workspace
+// @route   DELETE /api/v1/workspace/delete/:workspaceId
+// @access  Private
+router.delete("/delete/:workspaceId", async (req, res, next) => {
+    const { workspaceId } = req.params;
+    try {
+        await Workspace.findByIdAndDelete(workspaceId);
+        res.status(204).json({ message: 'Content deleted succesfully' });
+    } catch (error) {
+        res.status(400).json(error);
+    }
+});
+
+
 // @desc    Get data of a workspace
 // @route   GET /api/v1/workspace/:workspaceId
 // @access  Private

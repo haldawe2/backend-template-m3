@@ -178,6 +178,8 @@ Workspaces in the database have the following properties:
 | GET task | GET | /api/v1/tasks/:taskId | | Private |
 | POST create workspace | POST | /api/v1/workspace/create | | Private |
 | GET get data of a workspace | GET | /api/v1/workspace/:workspaceId | | Private |
+| Edit workspace | PUT | /api/v1/workspace/edit/:workspaceId | { name, founder, acronym, profilePicture, members, admins, info, projects } | Private |
+| Delete workspace | DELETE | /api/v1/workspace/delete/:workplaceId |  | Private |
 
 
 ---
