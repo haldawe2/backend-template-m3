@@ -4,7 +4,7 @@ const router = require("express").Router();
 const Task = require("../models/Task");
 
 // @desc    Sets dates as Date objects and creates a task
-// @route   POST /tasks/create
+// @route   POST /api/v1/tasks/create
 // @access  User
 router.post("/create", async (req, res, next) => {
   const {
@@ -24,6 +24,7 @@ router.post("/create", async (req, res, next) => {
     res.status(400).json({ message: 'Please fill all the required fields' })
   };
   try {
+    // Need to transform dates into Date object for validation in database
     const newTask = {
       name, 
       project, 
@@ -47,7 +48,7 @@ router.post("/create", async (req, res, next) => {
 });
 
 // @desc    Deletes a task by Id
-// @route   DELETE /tasks/delete/:taskId
+// @route   DELETE /api/v1/tasks/delete/:taskId
 // @access  User
 router.delete("/delete/:taskId", async (req, res, next) => {
   const { taskId } = req.params;
@@ -60,7 +61,7 @@ router.delete("/delete/:taskId", async (req, res, next) => {
 });
 
 // @desc    Edits a task
-// @route   PUT /tasks/edit/:taskId
+// @route   PUT /api/v1/tasks/edit/:taskId
 // @access  User
 router.put("/edit/:taskId", async (req, res, next) => {
   const { taskId } = req.params;
@@ -80,6 +81,7 @@ router.put("/edit/:taskId", async (req, res, next) => {
     links
   } = req.body;
   try {
+    // Need to transform dates into Date object for validation in database
     const newTask = {
       name, 
       project, 
@@ -103,7 +105,7 @@ router.put("/edit/:taskId", async (req, res, next) => {
 });
 
 // @desc    Returns a task by Id
-// @route   DELETE /tasks/:taskId
+// @route   DELETE /api/v1/tasks/:taskId
 // @access  User
 router.get("/:taskId", async (req, res, next) => {
   const { taskId } = req.params;
