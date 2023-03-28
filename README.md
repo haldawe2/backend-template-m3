@@ -176,6 +176,8 @@ Workspaces in the database have the following properties:
 | DELETE task | DELETE | /api/v1/tasks/delete/:taskId | | Private |
 | PUT update task | PUT | /api/v1/tasks/edit/:taskId | { name, project, status, notes, color, tags, , plannedStartDate, endDate, plannedEndDate, dependencies, workers, links } | Private |
 | GET task | GET | /api/v1/tasks/:taskId | | Private |
+| POST create workspace | POST | /api/v1/workspace/create | | Private |
+| GET get data of a workspace | GET | /api/v1/workspace/:workspaceId | | Private |
 
 
 ---

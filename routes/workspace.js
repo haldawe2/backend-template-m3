@@ -36,6 +36,42 @@ router.put("/create", async (req, res, next) => {
     }
 });
 
+// @desc    Edit info of a workspace
+// @route   PUT /api/v1/workspace/edit/:workspaceId
+// @access  Private
+router.put("/edit/:workspaceId", async (req, res, next) => {
+    const { workspaceId } = req.params;
+    const {
+        name,
+        founder,
+        acronym,
+        profilepicture,
+        members,
+        admins,
+        info,
+        projects
+    } = req.body;
+    if (name === "") {
+        res.status(400).json({ message: 'Need to name the workspace' })
+    };
+    const newWorkspace = {
+        name,
+        founder,
+        acronym,
+        profilepicture,
+        members,
+        admins,
+        info,
+        projects
+    };
+    try {
+        const createdWorkspace = await Workspace.findByIdAndUpdate( workspaceId, newWorkspace, {new: true});
+        res.status(201).json(createdWorkspace);
+    } catch (error) {
+        res.status(400).json(error);
+    }
+});
+
 // @desc    Get data of a workspace
 // @route   GET /api/v1/workspace/:workspaceId
 // @access  Private
