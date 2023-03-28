@@ -221,20 +221,22 @@ Projects in the database have the following properties:
 
 | Action           | Method    | Endpoint             | Req.body                        | Private/Public |
 |------------------|-----------|----------------------|---------------------------------|-----------------|
-| SIGN UP user     | POST      | /api/v1/auth/signup  | { username, email, password }   |    Public |                 
-| LOG IN user      | POST      | /api/v1/auth/login   | { email, password }             |    Public |                  
-| GET logged in user   | GET     | /api/v1/auth/me    |   | Private |
-| EDIT user data | GET | /api/v1/edit/:userId | | Private |
-| PUT user data | PUT | /api/v1/edit/:userId | { email, password1, password2, name, surname, profilePicture, company, availability } | Private |
-| DELETE user | DELETE | /api/v1/delete/:userId | | Private |
-| POST create task | POST | /api/v1/tasks/create | { name, project, status, notes, color, tags, startDate, endDate, dependencies, workers, links } | Private |
-| DELETE task | DELETE | /api/v1/tasks/delete/:taskId | | Private |
-| PUT update task | PUT | /api/v1/tasks/edit/:taskId | { name, project, status, notes, color, tags, , plannedStartDate, endDate, plannedEndDate, dependencies, workers, links } | Private |
-| GET task | GET | /api/v1/tasks/:taskId | | Private |
-| POST create workspace | POST | /api/v1/workspace/create | | Private |
-| GET get data of a workspace | GET | /api/v1/workspace/:workspaceId | | Private |
-| Edit workspace | PUT | /api/v1/workspace/edit/:workspaceId | { name, founder, acronym, profilePicture, members, admins, info, projects } | Private |
-| Delete workspace | DELETE | /api/v1/workspace/delete/:workplaceId |  | Private |
+| AUTH user sign up    | POST      | /api/v1/auth/signup  | { username, email, password }   |    Public |                 
+| AUTH user log in     | POST      | /api/v1/auth/login   | { email, password }             |    Public |                  
+| AUTH check user   | GET     | /api/v1/auth/me    |   | Private |
+| USER get user info | GET | /api/v1/edit/:userId | | Private |
+| USER update user data | PUT | /api/v1/edit/:userId | { email, password1, password2, name, surname, profilePicture, company, availability } | Private |
+| USER delete user | DELETE | /api/v1/delete/:userId | | Private |
+| TASKS create task | POST | /api/v1/tasks/create | { name, project, status, notes, color, tags, startDate, endDate, dependencies, workers, links } | Private |
+| TASKS delete task | DELETE | /api/v1/tasks/delete/:taskId | | Private |
+| TASKS update task | PUT | /api/v1/tasks/edit/:taskId | { name, project, status, notes, color, tags, , plannedStartDate, endDate, plannedEndDate, dependencies, workers, links } | Private |
+| TASKS get task info | GET | /api/v1/tasks/:taskId | | Private |
+| WORKSPACE create workspace | POST | /api/v1/workspace/create | | Private |
+| WORKSPACE get workspace info | GET | /api/v1/workspace/:workspaceId | | Private |
+| WORKSPACE update workspace | PUT | /api/v1/workspace/edit/:workspaceId | { name, founder, acronym, profilePicture, members, admins, info, projects } | Private |
+| WORKSPACE delete workspace | DELETE | /api/v1/workspace/delete/:workplaceId |  | Private |
+| PROJECT create project | POST | /api/v1/project/create | { name, workspace, founder, info, acronym, profilePicture, startDate, endDate, dependencies, workers } | Private |
+| PROJECT get info | GET | /api/v1/workspace/:workspaceId | | Private |
 
 
 ---
