@@ -263,6 +263,8 @@ Dependencies in the database have the following properties:
 | PROJECT delete | DELETE | /api/v1/project/:projectId | | Private |
 | DEPENDENCY create | POST | /api/v1/dependency/create | { type, firstTask, secondTask } | Private |
 | DEPENDENCY get info | GET | /api/v1/dependency/:dependencyId | | Private |
+| DEPENDENCY edit info | PUT | /api/v1/dependency/:dependencyId | { type, firstTask, secondTask } | Private |
+| DEPENDENCY delete | DELETE | /api/v1/dependency/:dependencyId | | Private |
 
 
 ---

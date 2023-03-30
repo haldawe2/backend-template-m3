@@ -28,4 +28,32 @@ router.get("/:dependencyId", async (req, res, next) => {
     };
 });
 
+// @desc    Edit dependency
+// @route   PUT /api/v1/dependency/:dependencyId
+// @access  Private
+router.put("/:dependencyId", async (req, res, next) => {
+    const { dependencyId } = req.params;
+    const { type, firstTask, secondTask } = req.body;
+    try {
+      const dependency = {type, firstTask, secondTask};
+      const newDependency = await Dependency.findByIdAndUpdate(dependencyId, dependency, {new: true});
+      res.status(201).json(newDependency);
+    } catch (error) {
+      res.status(400).json(error)
+    }
+});
+
+// @desc    Delete dependency
+// @route   DELETE /api/v1/dependency/:dependencyId
+// @access  Private
+router.delete("/:dependencyId", async (req, res, next) => {
+    const { dependencyId } = req.params;
+    try {
+      await Dependency.findByIdAndDelete(dependencyId);
+      res.status(204).json({ message: 'Dependency deleted succesfully'});
+    } catch (error) {
+      res.status(400).json(error)
+    }
+});
+
 module.exports = router;
