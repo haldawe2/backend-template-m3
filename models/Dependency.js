@@ -9,11 +9,13 @@ const dependencySchema = new Schema({
     },
     firstTask: {
         type: mongoose.Types.ObjectId,
-        ref: "Task"
+        ref: "Task",
+        required: [true, "First task required"]
     },
     secondTask: {
         type: mongoose.Types.ObjectId,
-        ref: "Task"
+        ref: "Task",
+        required: [true, "Second task required"]
     }
 });
 

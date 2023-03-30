@@ -214,6 +214,28 @@ Projects in the database have the following properties:
 }
 ```
 
+Dependencies in the database have the following properties:
+
+```js
+{
+  type: {
+    type: String,
+    enum: ["finishStart", "startStart", "finishFinish", "startFinish"],
+    default: "finishStart"
+  },
+  firstTask: {
+    type: mongoose.Types.ObjectId,
+    ref: "Task",
+    required: [true, "First task required"]
+  },
+  secondTask: {
+    type: mongoose.Types.ObjectId,
+    ref: "Task",
+    required: [true, "Second task required"]
+  }
+}
+```
+
 
 ---
 
@@ -239,6 +261,7 @@ Projects in the database have the following properties:
 | PROJECT get info | GET | /api/v1/workspace/:workspaceId | | Private |
 | PROJECT update | PUT | /api/v1/project/:projectId | { name, workspace, founder, info, acronym, profilePicture, startDate, plannedStartDate, endDate, plannedEndDate, dependencies, workers } | Private |
 | PROJECT delete | DELETE | /api/v1/project/:projectId | | Private |
+| DEPENDENCY create | POST | /api/v1/dependency/create | { type, firstTask, secondTask } | Private |
 
 
 ---
