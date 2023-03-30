@@ -12,7 +12,7 @@ router.get("/:userId", async (req, res, next) => {
     const user = await User.findById(userId);
     res.status(200).json(user);
   } catch (error) {
-    res.status(400).json(error);
+    next(error);
   }
 });
 
@@ -86,7 +86,7 @@ router.put("/edit/:userId", async (req, res, next) => {
     );
     res.status(201).json(newUser);
   } catch (error) {
-    res.status(400).json(error);
+    next(error);
   }
 });
 
@@ -99,7 +99,7 @@ router.delete("/delete/:userId", async (req, res, next) => {
     await User.findByIdAndDelete(userId);
     res.status(204).json({ message: "User deleted succesfully" });
   } catch (error) {
-    res.status(400).json(error);
+    next(error);
   }
 });
 

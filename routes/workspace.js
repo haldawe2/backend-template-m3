@@ -35,7 +35,7 @@ router.post("/create", async (req, res, next) => {
         const createdWorkspace = await Workspace.create(newWorkspace);
         res.status(201).json(createdWorkspace);
     } catch (error) {
-        res.status(400).json(error);
+        next(error);
     }
 });
 
@@ -71,7 +71,7 @@ router.put("/edit/:workspaceId", async (req, res, next) => {
         const createdWorkspace = await Workspace.findByIdAndUpdate( workspaceId, newWorkspace, {new: true});
         res.status(201).json(createdWorkspace);
     } catch (error) {
-        res.status(400).json(error);
+        next(error);
     }
 });
 
@@ -88,7 +88,7 @@ router.delete("/delete/:workspaceId", async (req, res, next) => {
         await Workspace.findByIdAndDelete(workspaceId);
         res.status(204).json({ message: 'Content deleted succesfully' });
     } catch (error) {
-        res.status(400).next(error);
+        next(error);
     }
 });
 
@@ -104,7 +104,7 @@ router.get("/:workspaceId", async (req, res, next) => {
             .populate("admins").populate("projects");
         res.status(200).json(workspaceFromDB);
     } catch (error) {
-        res.status(400).next(error);
+        next(error);
     }
 });
 

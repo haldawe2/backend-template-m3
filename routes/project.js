@@ -45,7 +45,7 @@ router.post("/create", async (req, res, next) => {
     const projectFromDB = await Project.create(newProject);
     res.status(201).json(projectFromDB);
   } catch (error) {
-    res.status(400).json(error);
+    next(error);
   }
 });
 
@@ -62,7 +62,7 @@ router.get("/:projectId", async (req, res, next) => {
       .populate("dependencies");
     res.status(200).json(projectFromDB);
   } catch (error) {
-    res.status(400).json(error);
+    next(error);
   }
 });
 
@@ -113,7 +113,7 @@ router.put("/edit/:projectId", async (req, res, next) => {
     const updatedProject = await Project.findByIdAndUpdate(projectId, newProject, {new: true});
     res.status(200).json(updatedProject);
   } catch (error) {
-    next(error)
+    next(error);
   }
 });
 
@@ -128,7 +128,7 @@ router.delete("/delete/:projectId", async (req, res, next) => {
     await Project.findByIdAndDelete(projectId);
     res.status(204).json({ message: 'Project deleted succesfully' })
   } catch (error) {
-    res.status(400).json(error);
+    next(error);
   }
 });
 

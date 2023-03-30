@@ -43,7 +43,7 @@ router.post("/create", async (req, res, next) => {
     const taskFromDB = await Task.create(newTask);
     res.status(201).json(taskFromDB);
   } catch (error) {
-    res.status(400).json(error)
+    next(error);
   }
 });
 
@@ -56,7 +56,7 @@ router.get("/:taskId", async (req, res, next) => {
     const taskFromDB = await Task.findById(taskId);
     res.status(200).json(taskFromDB);
   } catch (error) {
-    res.status(400).json(error)
+    next(error);
   }
 });
 
@@ -100,7 +100,7 @@ router.put("/edit/:taskId", async (req, res, next) => {
     const updatedTask = await Task.findByIdAndUpdate(taskId, newTask, {new: true});
     res.status(200).json(updatedTask);
   } catch (error) {
-    res.status(400).json(error)
+    next(error);
   }
 });
 
@@ -114,7 +114,7 @@ router.delete("/delete/:taskId", async (req, res, next) => {
     await Task.findByIdAndDelete(taskId);
     res.status(204).json({ message: 'Task deleted succesfully' });
   } catch (error) {
-    res.status(400).json(error)
+    next(error);
   }
 });
 

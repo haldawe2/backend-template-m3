@@ -11,7 +11,7 @@ router.post("/create", async (req, res, next) => {;
     const newDependency = await Dependency.create(dependency);
     res.status(200).json(newDependency);
   } catch (error) {
-    res.status(400).json(error)
+    next(error);
   }
 });
 
@@ -24,7 +24,7 @@ router.get("/:dependencyId", async (req, res, next) => {
         const dependencyFromDB = await Dependency.findById(dependencyId);
         res.status(200).json(dependencyFromDB);
     } catch (error) {
-        res.status(400).json(error);
+      next(error);
     };
 });
 
@@ -39,7 +39,7 @@ router.put("/edit/:dependencyId", async (req, res, next) => {
       const newDependency = await Dependency.findByIdAndUpdate(dependencyId, dependency, {new: true});
       res.status(201).json(newDependency);
     } catch (error) {
-      res.status(400).json(error)
+      next(error);
     }
 });
 
@@ -52,7 +52,7 @@ router.delete("/delete/:dependencyId", async (req, res, next) => {
       await Dependency.findByIdAndDelete(dependencyId);
       res.status(204).json({ message: 'Dependency deleted succesfully'});
     } catch (error) {
-      res.status(400).json(error)
+      next(error);
     }
 });
 
