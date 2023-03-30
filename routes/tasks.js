@@ -1,6 +1,7 @@
 const { isDate } = require('date-fns');
 const router = require("express").Router();
 const Task = require("../models/Task");
+const Dependency = require('../models/Dependency');
 
 // @desc    Sets dates as Date objects and creates a task
 // @route   POST /api/v1/tasks/create
@@ -39,21 +40,21 @@ router.post("/create", async (req, res, next) => {
       workers, 
       links
     }
-    await Task.create(newTask);
-    res.status(201).json({ message: 'Task created' });
+    const taskFromDB = await Task.create(newTask);
+    res.status(201).json(taskFromDB);
   } catch (error) {
     res.status(400).json(error)
   }
 });
 
-// @desc    Deletes a task by Id
-// @route   DELETE /api/v1/tasks/delete/:taskId
+// @desc    Gets task info
+// @route   GET /api/v1/tasks/delete/:taskId
 // @access  User
-router.delete("/delete/:taskId", async (req, res, next) => {
+router.get("/:taskId", async (req, res, next) => {
   const { taskId } = req.params;
   try {
-    await Task.findByIdAndDelete(taskId);
-    res.status(204).json({ message: 'Content deleted succesfully'});
+    const taskFromDB = await Task.findById(taskId);
+    res.status(200).json(taskFromDB);
   } catch (error) {
     res.status(400).json(error)
   }
@@ -104,11 +105,12 @@ router.put("/edit/:taskId", async (req, res, next) => {
 });
 
 // @desc    Returns a task by Id
-// @route   DELETE /api/v1/tasks/:taskId
+// @route   DELETE /api/v1/tasks/delete/:taskId
 // @access  User
-router.delete("/:taskId", async (req, res, next) => {
+router.delete("/delete/:taskId", async (req, res, next) => {
   const { taskId } = req.params;
   try {
+    await Dependency.deleteMany({ $or: [{firstTask: taskId}, {secondTask: taskId}] })
     await Task.findByIdAndDelete(taskId);
     res.status(204).json({ message: 'Task deleted succesfully' });
   } catch (error) {

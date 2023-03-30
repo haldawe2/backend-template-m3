@@ -1,10 +1,13 @@
 const router = require("express").Router();
+const Dependency = require("../models/Dependency");
+const Project = require("../models/Project");
+const Task = require("../models/Task");
 const Workspace = require("../models/Workspace");
 
 // @desc    Creates a workspace
 // @route   POST /api/v1/workspace/create
 // @access  Private
-router.put("/create", async (req, res, next) => {
+router.post("/create", async (req, res, next) => {
     const {
         name,
         founder,
@@ -78,10 +81,14 @@ router.put("/edit/:workspaceId", async (req, res, next) => {
 router.delete("/delete/:workspaceId", async (req, res, next) => {
     const { workspaceId } = req.params;
     try {
+        const projectsToDelete = await Project.find({ workspace: workspaceId }).select({ _id: 1});
+        await Dependency.deleteMany({ project: { $in: projectsToDelete}});
+        await Task.deleteMany({ project: { $in: projectsToDelete}});
+        await Project.deleteMany({ workspace: workspaceId })
         await Workspace.findByIdAndDelete(workspaceId);
         res.status(204).json({ message: 'Content deleted succesfully' });
     } catch (error) {
-        res.status(400).json(error);
+        res.status(400).next(error);
     }
 });
 
@@ -97,7 +104,7 @@ router.get("/:workspaceId", async (req, res, next) => {
             .populate("admins").populate("projects");
         res.status(200).json(workspaceFromDB);
     } catch (error) {
-        res.status(400).json(error);
+        res.status(400).next(error);
     }
 });
 

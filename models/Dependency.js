@@ -16,6 +16,11 @@ const dependencySchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: "Task",
         required: [true, "Second task required"]
+    },
+    project: {
+        type: mongoose.Types.ObjectId,
+        ref: "Project",
+        required: [true, "Project required"]
     }
 });
 

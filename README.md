@@ -246,7 +246,7 @@ Dependencies in the database have the following properties:
 | AUTH user sign up    | POST      | /api/v1/auth/signup  | { username, email, password }   |    Public |                 
 | AUTH user log in     | POST      | /api/v1/auth/login   | { email, password }             |    Public |                  
 | AUTH check user   | GET     | /api/v1/auth/me    |   | Private |
-| USER get user info | GET | /api/v1/edit/:userId | | Private |
+| USER get user info | GET | /api/v1/:userId | | Private |
 | USER update user data | PUT | /api/v1/edit/:userId | { email, password1, password2, name, surname, profilePicture, company, availability } | Private |
 | USER delete user | DELETE | /api/v1/delete/:userId | | Private |
 | TASKS create task | POST | /api/v1/tasks/create | { name, project, status, notes, color, tags, startDate, endDate, dependencies, workers, links } | Private |
@@ -259,12 +259,12 @@ Dependencies in the database have the following properties:
 | WORKSPACE delete workspace | DELETE | /api/v1/workspace/delete/:workplaceId |  | Private |
 | PROJECT create project | POST | /api/v1/project/create | { name, workspace, founder, info, acronym, profilePicture, startDate, endDate, dependencies, workers } | Private |
 | PROJECT get info | GET | /api/v1/workspace/:workspaceId | | Private |
-| PROJECT update | PUT | /api/v1/project/:projectId | { name, workspace, founder, info, acronym, profilePicture, startDate, plannedStartDate, endDate, plannedEndDate, dependencies, workers } | Private |
-| PROJECT delete | DELETE | /api/v1/project/:projectId | | Private |
+| PROJECT update | PUT | /api/v1/project/edit/:projectId | { name, workspace, founder, info, acronym, profilePicture, startDate, plannedStartDate, endDate, plannedEndDate, dependencies, workers } | Private |
+| PROJECT delete | DELETE | /api/v1/project/delete/:projectId | | Private |
 | DEPENDENCY create | POST | /api/v1/dependency/create | { type, firstTask, secondTask } | Private |
 | DEPENDENCY get info | GET | /api/v1/dependency/:dependencyId | | Private |
-| DEPENDENCY edit info | PUT | /api/v1/dependency/:dependencyId | { type, firstTask, secondTask } | Private |
-| DEPENDENCY delete | DELETE | /api/v1/dependency/:dependencyId | | Private |
+| DEPENDENCY edit info | PUT | /api/v1/dependency/edit/:dependencyId | { type, firstTask, secondTask } | Private |
+| DEPENDENCY delete | DELETE | /api/v1/dependency/delete/:dependencyId | | Private |
 
 
 ---

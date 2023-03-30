@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const Project = require("../models/Project");
 const { isDate } = require("date-fns");
-const { findByIdAndUpdate } = require("../models/Project");
+const Dependency = require("../models/Dependency");
+const Task = require("../models/Task");
 
 // @desc    Create new project
 // @route   POST /api/v1/project/create
@@ -41,8 +42,8 @@ router.post("/create", async (req, res, next) => {
     workers,
   };
   try {
-    await Project.create(newProject);
-    res.status(201).json({ message: "Project created succesfully" });
+    const projectFromDB = await Project.create(newProject);
+    res.status(201).json(projectFromDB);
   } catch (error) {
     res.status(400).json(error);
   }
@@ -66,9 +67,9 @@ router.get("/:projectId", async (req, res, next) => {
 });
 
 // @desc    Update project info
-// @route   PUT /api/v1/project/:projectId
+// @route   PUT /api/v1/project/edit/:projectId
 // @access  Private
-router.put("/:projectId", async (req, res, next) => {
+router.put("/edit/:projectId", async (req, res, next) => {
   const { projectId } = req.params;
   const {
     name,
@@ -117,11 +118,13 @@ router.put("/:projectId", async (req, res, next) => {
 });
 
 // @desc    Delete a project by ID
-// @route   DELETE /api/v1/project/:projectId
+// @route   DELETE /api/v1/project/delete/:projectId
 // @access  Private
-router.delete("/:projectId", async (req, res, next) => {
+router.delete("/delete/:projectId", async (req, res, next) => {
   const { projectId } = req.params;
   try {
+    await Dependency.deleteMany({ project: projectId });
+    await Task.deleteMany({ project: projectId });
     await Project.findByIdAndDelete(projectId);
     res.status(204).json({ message: 'Project deleted succesfully' })
   } catch (error) {

@@ -5,9 +5,9 @@ const Dependency = require('../models/Dependency');
 // @route   POST /api/v1/dependency/create
 // @access  Private
 router.post("/create", async (req, res, next) => {;
-  const { type, firstTask, secondTask } = req.body;
+  const { type, firstTask, secondTask, project } = req.body;
   try {
-    const dependency = {type, firstTask, secondTask};
+    const dependency = {type, firstTask, secondTask, project};
     const newDependency = await Dependency.create(dependency);
     res.status(200).json(newDependency);
   } catch (error) {
@@ -29,9 +29,9 @@ router.get("/:dependencyId", async (req, res, next) => {
 });
 
 // @desc    Edit dependency
-// @route   PUT /api/v1/dependency/:dependencyId
+// @route   PUT /api/v1/dependency/edit/:dependencyId
 // @access  Private
-router.put("/:dependencyId", async (req, res, next) => {
+router.put("/edit/:dependencyId", async (req, res, next) => {
     const { dependencyId } = req.params;
     const { type, firstTask, secondTask } = req.body;
     try {
@@ -44,9 +44,9 @@ router.put("/:dependencyId", async (req, res, next) => {
 });
 
 // @desc    Delete dependency
-// @route   DELETE /api/v1/dependency/:dependencyId
+// @route   DELETE /api/v1/dependency/delete/:dependencyId
 // @access  Private
-router.delete("/:dependencyId", async (req, res, next) => {
+router.delete("/delete/:dependencyId", async (req, res, next) => {
     const { dependencyId } = req.params;
     try {
       await Dependency.findByIdAndDelete(dependencyId);
