@@ -125,7 +125,7 @@ router.delete("/:projectId", async (req, res, next) => {
     await Project.findByIdAndDelete(projectId);
     res.status(204).json({ message: 'Project deleted succesfully' })
   } catch (error) {
-    res.status(400).json(error)
+    res.status(400).json(error);
   }
 });
 
