@@ -12,6 +12,7 @@ const tasksRouter = require('./routes/tasks');
 const userRouter = require('./routes/user');
 const workspaceRouter = require('./routes/workspace');
 const projectRouter = require('./routes/project');
+const dependencyRouter = require('./routes/dependency');
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use('/tasks', tasksRouter);
 app.use('/user', userRouter);
 app.use('/workspace', workspaceRouter);
 app.use('/project', projectRouter);
+app.use('/dependency', dependencyRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
