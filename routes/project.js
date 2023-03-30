@@ -116,4 +116,17 @@ router.put("/:projectId", async (req, res, next) => {
   }
 });
 
+// @desc    Delete a project by ID
+// @route   DELETE /api/v1/project/:projectId
+// @access  Private
+router.delete("/:projectId", async (req, res, next) => {
+  const { projectId } = req.params;
+  try {
+    await Project.findByIdAndDelete(projectId);
+    res.status(204).json({ message: 'Project deleted succesfully' })
+  } catch (error) {
+    res.status(400).json(error)
+  }
+});
+
 module.exports = router;

@@ -106,11 +106,11 @@ router.put("/edit/:taskId", async (req, res, next) => {
 // @desc    Returns a task by Id
 // @route   DELETE /api/v1/tasks/:taskId
 // @access  User
-router.get("/:taskId", async (req, res, next) => {
+router.delete("/:taskId", async (req, res, next) => {
   const { taskId } = req.params;
   try {
-    const taskFromDB = await Task.findById(taskId);
-    res.status(200).json(taskFromDB);
+    await Task.findByIdAndDelete(taskId);
+    res.status(204).json({ message: 'Task deleted succesfully' });
   } catch (error) {
     res.status(400).json(error)
   }

@@ -238,6 +238,7 @@ Projects in the database have the following properties:
 | PROJECT create project | POST | /api/v1/project/create | { name, workspace, founder, info, acronym, profilePicture, startDate, endDate, dependencies, workers } | Private |
 | PROJECT get info | GET | /api/v1/workspace/:workspaceId | | Private |
 | PROJECT update | PUT | /api/v1/project/:projectId | { name, workspace, founder, info, acronym, profilePicture, startDate, plannedStartDate, endDate, plannedEndDate, dependencies, workers } | Private |
+| PROJECT delete | DELETE | /api/v1/project/:projectId | | Private |
 
 
 ---
