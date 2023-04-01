@@ -3,11 +3,12 @@ const Dependency = require("../models/Dependency");
 const Project = require("../models/Project");
 const Task = require("../models/Task");
 const Workspace = require("../models/Workspace");
+const { isAuthenticated } = require('../middlewares/jwt');
 
 // @desc    Creates a workspace
 // @route   POST /api/v1/workspace/create
 // @access  Private
-router.post("/create", async (req, res, next) => {
+router.post("/create", isAuthenticated, async (req, res, next) => {
     const {
         name,
         founder,
@@ -42,7 +43,7 @@ router.post("/create", async (req, res, next) => {
 // @desc    Edit info of a workspace
 // @route   PUT /api/v1/workspace/edit/:workspaceId
 // @access  Private
-router.put("/edit/:workspaceId", async (req, res, next) => {
+router.put("/edit/:workspaceId", isAuthenticated, async (req, res, next) => {
     const { workspaceId } = req.params;
     const {
         name,
@@ -78,7 +79,7 @@ router.put("/edit/:workspaceId", async (req, res, next) => {
 // @desc    Delete a workspace
 // @route   DELETE /api/v1/workspace/delete/:workspaceId
 // @access  Private
-router.delete("/delete/:workspaceId", async (req, res, next) => {
+router.delete("/delete/:workspaceId", isAuthenticated, async (req, res, next) => {
     const { workspaceId } = req.params;
     try {
         const projectsToDelete = await Project.find({ workspace: workspaceId }).select({ _id: 1});
@@ -96,7 +97,7 @@ router.delete("/delete/:workspaceId", async (req, res, next) => {
 // @desc    Get data of a workspace
 // @route   GET /api/v1/workspace/:workspaceId
 // @access  Private
-router.get("/:workspaceId", async (req, res, next) => {
+router.get("/:workspaceId", isAuthenticated, async (req, res, next) => {
     const { workspaceId } = req.params;
     try {
         const workspaceFromDB = await Workspace.findById(workspaceId)

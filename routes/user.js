@@ -2,11 +2,12 @@ const router = require("express").Router();
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const saltRounds = 10;
+const { isAuthenticated } = require('../middlewares/jwt');
 
 // @desc    Edit user data
 // @route   GET /api/v1/user/:userId
 // @access  Private
-router.get("/:userId", async (req, res, next) => {
+router.get("/:userId", isAuthenticated, async (req, res, next) => {
   const { userId } = req.params;
   try {
     const user = await User.findById(userId);
@@ -19,7 +20,7 @@ router.get("/:userId", async (req, res, next) => {
 // @desc    Edit user data
 // @route   PUT /api/v1/user/edit/:userId
 // @access  Private
-router.put("/edit/:userId", async (req, res, next) => {
+router.put("/edit/:userId", isAuthenticated, async (req, res, next) => {
   const { userId } = req.params;
   const {
     email,
@@ -93,7 +94,7 @@ router.put("/edit/:userId", async (req, res, next) => {
 // @desc    Delete user
 // @route   DELETE /api/v1/user/delete/:userId
 // @access  Private
-router.delete("/delete/:userId", async (req, res, next) => {
+router.delete("/delete/:userId", isAuthenticated, async (req, res, next) => {
   const { userId } = req.params;
   try {
     await User.findByIdAndDelete(userId);

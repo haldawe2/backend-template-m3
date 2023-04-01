@@ -3,11 +3,12 @@ const Project = require("../models/Project");
 const { isDate } = require("date-fns");
 const Dependency = require("../models/Dependency");
 const Task = require("../models/Task");
+const { isAuthenticated } = require('../middlewares/jwt');
 
 // @desc    Create new project
 // @route   POST /api/v1/project/create
 // @access  Private
-router.post("/create", async (req, res, next) => {
+router.post("/create", isAuthenticated, async (req, res, next) => {
   const {
     name,
     workspace,
@@ -52,7 +53,7 @@ router.post("/create", async (req, res, next) => {
 // @desc    Get project info
 // @route   GET /api/v1/project/:projectId
 // @access  Private
-router.get("/:projectId", async (req, res, next) => {
+router.get("/:projectId", isAuthenticated, async (req, res, next) => {
   const { projectId } = req.params;
   try {
     const projectFromDB = await Project.findById(projectId)
@@ -69,7 +70,7 @@ router.get("/:projectId", async (req, res, next) => {
 // @desc    Update project info
 // @route   PUT /api/v1/project/edit/:projectId
 // @access  Private
-router.put("/edit/:projectId", async (req, res, next) => {
+router.put("/edit/:projectId", isAuthenticated, async (req, res, next) => {
   const { projectId } = req.params;
   const {
     name,
@@ -120,7 +121,7 @@ router.put("/edit/:projectId", async (req, res, next) => {
 // @desc    Delete a project by ID
 // @route   DELETE /api/v1/project/delete/:projectId
 // @access  Private
-router.delete("/delete/:projectId", async (req, res, next) => {
+router.delete("/delete/:projectId", isAuthenticated, async (req, res, next) => {
   const { projectId } = req.params;
   try {
     await Dependency.deleteMany({ project: projectId });

@@ -2,11 +2,12 @@ const { isDate } = require('date-fns');
 const router = require("express").Router();
 const Task = require("../models/Task");
 const Dependency = require('../models/Dependency');
+const { isAuthenticated } = require('../middlewares/jwt');
 
 // @desc    Sets dates as Date objects and creates a task
 // @route   POST /api/v1/tasks/create
 // @access  User
-router.post("/create", async (req, res, next) => {
+router.post("/create", isAuthenticated, async (req, res, next) => {
   const {
     name,
     project,
@@ -50,7 +51,7 @@ router.post("/create", async (req, res, next) => {
 // @desc    Gets task info
 // @route   GET /api/v1/tasks/delete/:taskId
 // @access  User
-router.get("/:taskId", async (req, res, next) => {
+router.get("/:taskId", isAuthenticated, async (req, res, next) => {
   const { taskId } = req.params;
   try {
     const taskFromDB = await Task.findById(taskId);
@@ -63,7 +64,7 @@ router.get("/:taskId", async (req, res, next) => {
 // @desc    Edits a task
 // @route   PUT /api/v1/tasks/edit/:taskId
 // @access  User
-router.put("/edit/:taskId", async (req, res, next) => {
+router.put("/edit/:taskId", isAuthenticated, async (req, res, next) => {
   const { taskId } = req.params;
   const {
     name,
@@ -107,7 +108,7 @@ router.put("/edit/:taskId", async (req, res, next) => {
 // @desc    Returns a task by Id
 // @route   DELETE /api/v1/tasks/delete/:taskId
 // @access  User
-router.delete("/delete/:taskId", async (req, res, next) => {
+router.delete("/delete/:taskId", isAuthenticated, async (req, res, next) => {
   const { taskId } = req.params;
   try {
     await Dependency.deleteMany({ $or: [{firstTask: taskId}, {secondTask: taskId}] })
