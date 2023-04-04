@@ -252,7 +252,8 @@ Dependencies in the database have the following properties:
 | TASKS create task | POST | /api/v1/tasks/create | { name, project, status, notes, color, tags, startDate, endDate, dependencies, workers, links } | Private |
 | TASKS delete task | DELETE | /api/v1/tasks/delete/:taskId | | Private |
 | TASKS update task | PUT | /api/v1/tasks/edit/:taskId | { name, project, status, notes, color, tags, , plannedStartDate, endDate, plannedEndDate, dependencies, workers, links } | Private |
-| TASKS get task info | GET | /api/v1/tasks/:taskId | | Private |
+| TASKS get task info | GET | /api/v1/tasks/project/:projectId | | Private |
+| TASKS get tasks related to a project | GET | /api/v1/tasks/:taskId | | Private |
 | WORKSPACE create workspace | POST | /api/v1/workspace/create | | Private |
 | WORKSPACE get workspace info | GET | /api/v1/workspace/:workspaceId | | Private |
 | WORKSPACE get workspaces related to user | GET | /api/v1/workspace/user/:userId | | Private |

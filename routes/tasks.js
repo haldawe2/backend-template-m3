@@ -48,18 +48,6 @@ router.post("/create", isAuthenticated, async (req, res, next) => {
   }
 });
 
-// @desc    Gets task info
-// @route   GET /api/v1/tasks/:taskId
-// @access  User
-router.get("/:taskId", isAuthenticated, async (req, res, next) => {
-  const { taskId } = req.params;
-  try {
-    const taskFromDB = await Task.findById(taskId);
-    res.status(200).json(taskFromDB);
-  } catch (error) {
-    next(error);
-  }
-});
 
 // @desc    Edits a task
 // @route   PUT /api/v1/tasks/edit/:taskId
@@ -114,6 +102,32 @@ router.delete("/delete/:taskId", isAuthenticated, async (req, res, next) => {
     await Dependency.deleteMany({ $or: [{firstTask: taskId}, {secondTask: taskId}] })
     await Task.findByIdAndDelete(taskId);
     res.status(204).json({ message: 'Task deleted succesfully' });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc    Gets tasks from a project
+// @route   GET /api/v1/tasks/project/:projectId
+// @access  User
+router.get("/project/:projectId", isAuthenticated, async (req, res, next) => {
+  const { projectId } = req.params;
+  try {
+    const tasksFromDB = await Task.find({project: projectId});
+    res.status(200).json(tasksFromDB);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc    Gets task info
+// @route   GET /api/v1/tasks/:taskId
+// @access  User
+router.get("/:taskId", isAuthenticated, async (req, res, next) => {
+  const { taskId } = req.params;
+  try {
+    const taskFromDB = await Task.findById(taskId);
+    res.status(200).json(taskFromDB);
   } catch (error) {
     next(error);
   }
