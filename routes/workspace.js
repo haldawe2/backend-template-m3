@@ -93,6 +93,21 @@ router.delete("/delete/:workspaceId", isAuthenticated, async (req, res, next) =>
     }
 });
 
+// @desc    Get data of a workspace
+// @route   GET /api/v1/workspace/user/:userId
+// @access  Private
+router.get("/user/:userId", isAuthenticated, async (req, res, next) => {
+    const { userId } = req.params;
+    try {
+        const workspacesFromDB = await Workspace.find({ user: userId })
+            .populate("founder").populate("members")
+            .populate("admins").populate("projects");
+        res.status(200).json(workspacesFromDB);
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 // @desc    Get data of a workspace
 // @route   GET /api/v1/workspace/:workspaceId

@@ -49,7 +49,7 @@ router.post("/create", isAuthenticated, async (req, res, next) => {
 });
 
 // @desc    Gets task info
-// @route   GET /api/v1/tasks/delete/:taskId
+// @route   GET /api/v1/tasks/:taskId
 // @access  User
 router.get("/:taskId", isAuthenticated, async (req, res, next) => {
   const { taskId } = req.params;
