@@ -56,7 +56,7 @@ router.post("/create", isAuthenticated, async (req, res, next) => {
 router.get("/workspace/:workspaceId", isAuthenticated, async (req, res, next) => {
   const { workspaceId } = req.params;
   try {
-    const projectFromDB = await Project.findById(workspaceId)
+    const projectFromDB = await Project.find({ workspace: workspaceId });
     res.status(200).json(projectFromDB);
   } catch (error) {
     next(error);
