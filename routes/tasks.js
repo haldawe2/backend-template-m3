@@ -93,7 +93,7 @@ router.put("/edit/:taskId", isAuthenticated, async (req, res, next) => {
   }
 });
 
-// @desc    Returns a task by Id
+// @desc    Deletes a task by Id
 // @route   DELETE /api/v1/tasks/delete/:taskId
 // @access  User
 router.delete("/delete/:taskId", isAuthenticated, async (req, res, next) => {

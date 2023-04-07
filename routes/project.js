@@ -50,17 +50,13 @@ router.post("/create", isAuthenticated, async (req, res, next) => {
   }
 });
 
-// @desc    Get project info
-// @route   GET /api/v1/project/:projectId
+// @desc    Get projects related to a workspace
+// @route   GET /api/v1/project/workspace/:workspaceId
 // @access  Private
-router.get("/:projectId", isAuthenticated, async (req, res, next) => {
-  const { projectId } = req.params;
+router.get("/workspace/:workspaceId", isAuthenticated, async (req, res, next) => {
+  const { workspaceId } = req.params;
   try {
-    const projectFromDB = await Project.findById(projectId)
-      .populate("workspace")
-      .populate("founder")
-      .populate("workers")
-      .populate("dependencies");
+    const projectFromDB = await Project.findById(workspaceId)
     res.status(200).json(projectFromDB);
   } catch (error) {
     next(error);
@@ -128,6 +124,23 @@ router.delete("/delete/:projectId", isAuthenticated, async (req, res, next) => {
     await Task.deleteMany({ project: projectId });
     await Project.findByIdAndDelete(projectId);
     res.status(204).json({ message: 'Project deleted succesfully' })
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc    Get project info
+// @route   GET /api/v1/project/:projectId
+// @access  Private
+router.get("/:projectId", isAuthenticated, async (req, res, next) => {
+  const { projectId } = req.params;
+  try {
+    const projectFromDB = await Project.findById(projectId)
+      .populate("workspace")
+      .populate("founder")
+      .populate("workers")
+      .populate("dependencies");
+    res.status(200).json(projectFromDB);
   } catch (error) {
     next(error);
   }
