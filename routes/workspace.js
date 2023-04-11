@@ -108,6 +108,21 @@ router.get("/user/:userId", isAuthenticated, async (req, res, next) => {
     }
 });
 
+// @desc    Get data of a workspace
+// @route   GET /api/v1/workspace/project/:projectId
+// @access  Private
+router.get("/project/:projectId", isAuthenticated, async (req, res, next) => {
+    const { projectId } = req.params;
+    try {
+        const projectFromDB = await Project.findById(projectId)
+        const projectsFromDB = await Project.find({ workspace: projectFromDB.workspace })
+        res.status(200).json(projectsFromDB);
+    } catch (error) {
+        next(error);
+    }
+});
+
+
 
 // @desc    Get data of a workspace
 // @route   GET /api/v1/workspace/:workspaceId
