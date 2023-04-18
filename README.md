@@ -273,8 +273,8 @@ Dependencies in the database have the following properties:
 
 ## Useful links
 
-- [Presentation slides]()
-- [Frontend repository]()
-- [Frontend deploy]()
-- [Deployed REST API]()
+- [Presentation slides](https://slides.com/haldawe/proma)
+- [Frontend repository](https://github.com/haldawe2/frontend-template-m3)
+- [Frontend deploy](https://swiftpm.netlify.app/)
+- [Deployed REST API](project-manager-backend.fly.dev)
 
